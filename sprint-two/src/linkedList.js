@@ -3,36 +3,56 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
 
-  let count = 0;
   list.addToTail = function(value) {
-    //initiate first value as head and tail
-    //any new Node values added should equal current tail
-    //increment count
+    //Create Node
+    var newNode = new Node(value);
+    //if head is null, set to first node
+    if (list.head === null) {
+      list.head = newNode;
+    } else {
+    //any added new Node will be added into next null in head
+      list.addToHead(newNode);
+    }
 
+    //any new Node values added should equal current tail
+    list.tail = newNode;
   };
+
+  //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
+  list.addToHead  = function(node) {
+    //helper function to addToTail
+    //recurse through head and where next is null, input node
+    if (this.head.next === null) {
+      this.head.next = node;
+    } else {
+      this.head.next.addToHead(node);
+    }
+  }
 
   list.removeHead = function() {
     //initiate result
+    var result = this.head.value;
     //set head equal to next node
+    this.head = this.head.next;
     //return result
+    return result;
   };
 
   list.contains = function(target) {
-    //iterating through list
+    //recurse through head
       //check if target is there
       //returns true if there
-    //returns false if true is not
+    //returns false if null
   };
 
   return list;
 };
 
-var Node = function(value, count) {
+var Node = function(value) {
   var node = {};
 
   node.value = value;
   node.next = null;
-  // node.count = count;
 
   return node;
 };
