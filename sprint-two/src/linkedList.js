@@ -9,13 +9,14 @@ var LinkedList = function() {
     //if head is null, set to first node
     if (list.head === null) {
       list.head = newNode;
+      list.tail = newNode;
     } else {
     //any added new Node will be added into next null in head
-      list.addToHead(newNode, list.head);
-    }
+      list.tail.next = newNode;
+      list.tail = newNode;
     //any new Node values added should equal current tail
-    //list.tail.next = newNode;
-    list.tail = newNode;
+    }
+
   };
 
   // list.tail [ {1, null}]
@@ -25,15 +26,6 @@ var LinkedList = function() {
   // list.tail = {2, null}
 
   //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
-  list.addToHead  = function(node, obj) {
-    //helper function to addToTail
-    //recurse through head and where next is null, input node
-    if (obj.next === null) {
-      obj.next = node;
-    } else {
-      list.addToHead(node, obj.next);
-    }
-  }
 
   list.removeHead = function() {
     //initiate result
