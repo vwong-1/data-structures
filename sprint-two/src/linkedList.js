@@ -24,7 +24,6 @@ var LinkedList = function() {
   // newNode = {2, null}
   // list.tail = {2, null}
 
-
   //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
   list.addToHead  = function(node, obj) {
     //helper function to addToTail
@@ -81,6 +80,9 @@ var Node = function(value) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  addToTail:   O(n)
+  removeHead:  O(1)
+  contains:    O(n)
  */
 
 
