@@ -30,17 +30,29 @@ var LinkedList = function() {
 
   list.removeHead = function() {
     //initiate result
-    var result = this.head.value;
+    var result = list.head.value;
     //set head equal to next node
-    this.head = this.head.next;
+    list.head = list.head.next;
     //return result
     return result;
   };
 
   list.contains = function(target) {
-    //recurse through head
-      //check if target is there
-      //returns true if there
+  //recurse through head
+  let currentObj = list.head;
+  //check if target is there
+  var containsHelper = function(target, currentObj) {
+    if (currentObj.value === target) {
+      return true;
+    } else if (currentObj.value === null) {
+      return false;
+    } else {
+      containsHelper(target, currentObj.next);
+    }
+
+    return containsHelper(target, list.head);
+  }
+    //returns true if there
     //returns false if null
   };
 
