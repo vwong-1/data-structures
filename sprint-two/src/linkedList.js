@@ -14,8 +14,16 @@ var LinkedList = function() {
       list.addToHead(newNode, list.head);
     }
     //any new Node values added should equal current tail
+    //list.tail.next = newNode;
     list.tail = newNode;
   };
+
+  // list.tail [ {1, null}]
+  // newNOde* = {2,null}
+  // list.tail.next = {1, newNode}
+  // newNode = {2, null}
+  // list.tail = {2, null}
+
 
   //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
   list.addToHead  = function(node, obj) {
@@ -38,21 +46,24 @@ var LinkedList = function() {
   };
 
   list.contains = function(target) {
-  //recurse through head
-  let currentObj = list.head;
-  //check if target is there
-  var containsHelper = function(target, currentObj) {
-    if (currentObj.value === target) {
-      return true;
-    } else if (currentObj.value === null) {
-      return false;
-    } else {
-      containsHelper(target, currentObj.next);
-    }
+    //recurse through head
+    let currentObj = list.head;
+    let isFound = false;
+    //check if target is there
+    var containsHelper = function(target, currentObj) {
 
-    return containsHelper(target, list.head);
-  }
+      if (currentObj.value === target) {
+        return isFound = true;
+      } else if (currentObj.next === null) {
+        return isFound;
+      } else {
+        containsHelper(target, currentObj.next);
+      }
+
+      return isFound;
+    }
     //returns true if there
+    return containsHelper(target, list.head);
     //returns false if null
   };
 
