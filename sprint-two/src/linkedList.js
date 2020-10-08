@@ -11,21 +11,20 @@ var LinkedList = function() {
       list.head = newNode;
     } else {
     //any added new Node will be added into next null in head
-      list.addToHead(newNode);
+      list.addToHead(newNode, list.head);
     }
-
     //any new Node values added should equal current tail
     list.tail = newNode;
   };
 
   //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
-  list.addToHead  = function(node) {
+  list.addToHead  = function(node, obj) {
     //helper function to addToTail
     //recurse through head and where next is null, input node
-    if (this.head.next === null) {
-      this.head.next = node;
+    if (obj.next === null) {
+      obj.next = node;
     } else {
-      this.head.next.addToHead(node);
+      list.addToHead(node, obj.next);
     }
   }
 
