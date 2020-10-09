@@ -16,10 +16,13 @@ Graph.prototype.contains = function(node) {
 
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
-  var remove = function(edge) {
-    this.removeEdge(edge, node);
+  // this.forEachNode(this.removeEdge);
+  for (let key in this) {
+    if (this.hasOwnProperty(key)) {
+      this.removeEdge(key, node);
+    }
   }
-  this.forEachNode(this.removeEdge);
+
   delete this[node];
 };
 
@@ -31,8 +34,8 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
         return true;
       }
     }
-    return false;
   }
+  return false;
 };
 
 // Connects two nodes in a graph by adding an edge between them.
@@ -52,7 +55,6 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
-
   let removeEdgeHelper = function(fromNodeArr, toNodeNumber) {
     for (let i = 0; i < fromNodeArr.length; i++) {
       if (fromNodeArr[i] === toNodeNumber) {
@@ -69,7 +71,6 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
-  console.log(this);
   for (let key in this) {
     //hasOwnProperty returns false if the referenced key in 'this' is inherited
     if (this.hasOwnProperty(key)) {
