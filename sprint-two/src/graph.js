@@ -16,6 +16,10 @@ Graph.prototype.contains = function(node) {
 
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
+  var remove = function(edge) {
+    this.removeEdge(edge, node);
+  }
+  this.forEachNode(this.removeEdge);
   delete this[node];
 };
 
@@ -36,6 +40,11 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
   if (this[fromNode] && this[toNode]) {
     this[fromNode].push(toNode);
     this[toNode].push(fromNode);
+
+    // Assuming integers only
+    // this[fromNode].push(parseInt(toNode));
+    // this[toNode].push(parseInt(fromNode));
+
   } else {
     console.log("one or both of these nodes do not exist");
   }
@@ -60,6 +69,13 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  console.log(this);
+  for (let key in this) {
+    //hasOwnProperty returns false if the referenced key in 'this' is inherited
+    if (this.hasOwnProperty(key)) {
+      cb(key);
+    }
+  }
 };
 
 /*
