@@ -1,36 +1,33 @@
-
-
 // Instantiate a new graph
 var Graph = function() {
+  this.nodeStorage = {};
 };
 
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(node) {
-  this[node] = [];
+  this.nodeStorage[node] = [];
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
 Graph.prototype.contains = function(node) {
-  return (this[node]) ? true : false;
+  return (this.nodeStorage[node]) ? true : false;
 };
 
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
-  // this.forEachNode(this.removeEdge);
-  for (let key in this) {
-    if (this.hasOwnProperty(key)) {
-      this.removeEdge(key, node);
-    }
+  // this.nodeStorage.forEachNode(this.nodeStorage.removeEdge);
+  for (let key in this.nodeStorage) {
+    this.removeEdge(key, node);
   }
 
-  delete this[node];
+  delete this.nodeStorage[node];
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
 Graph.prototype.hasEdge = function(fromNode, toNode) {
-  if (this[fromNode] && this[toNode]) {
-    for (let i = 0; i < this[fromNode].length; i++) {
-      if (this[fromNode][i] === toNode) {
+  if (this.nodeStorage[fromNode] && this.nodeStorage[toNode]) {
+    for (let i = 0; i < this.nodeStorage[fromNode].length; i++) {
+      if (this.nodeStorage[fromNode][i] === toNode) {
         return true;
       }
     }
@@ -40,13 +37,13 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
-  if (this[fromNode] && this[toNode]) {
-    this[fromNode].push(toNode);
-    this[toNode].push(fromNode);
+  if (this.nodeStorage[fromNode] && this.nodeStorage[toNode]) {
+    this.nodeStorage[fromNode].push(toNode);
+    this.nodeStorage[toNode].push(fromNode);
 
     // Assuming integers only
-    // this[fromNode].push(parseInt(toNode));
-    // this[toNode].push(parseInt(fromNode));
+    // this.nodeStorage[fromNode].push(parseInt(toNode));
+    // this.nodeStorage[toNode].push(parseInt(fromNode));
 
   } else {
     console.log("one or both of these nodes do not exist");
@@ -63,19 +60,17 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
     }
   }
 
-  if (this[fromNode] && this[toNode]) {
-    removeEdgeHelper(this[fromNode], toNode);
-    removeEdgeHelper(this[toNode], fromNode);
+  if (this.nodeStorage[fromNode] && this.nodeStorage[toNode]) {
+    removeEdgeHelper(this.nodeStorage[fromNode], toNode);
+    removeEdgeHelper(this.nodeStorage[toNode], fromNode);
   }
 };
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
-  for (let key in this) {
-    //hasOwnProperty returns false if the referenced key in 'this' is inherited
-    if (this.hasOwnProperty(key)) {
-      cb(key);
-    }
+  for (let key in this.nodeStorage) {
+    //hasOwnProperty returns false if the referenced key in 'this.nodeStorage' is inherited
+    cb(key);
   }
 };
 
@@ -91,5 +86,3 @@ Graph.prototype.forEachNode = function(cb) {
  * forEachNode : O(n)
  *
  */
-
-
