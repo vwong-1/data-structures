@@ -13,25 +13,59 @@ var LinkedList = function() {
     } else {
     //any added new Node will be added into next null in head
       list.tail.next = newNode;
+      newNode.previous = list.tail;
       list.tail = newNode;
     //any new Node values added should equal current tail
     }
 
   };
 
-  // list.tail [ {1, null}]
-  // newNOde* = {2,null}
-  // list.tail.next = {1, newNode}
-  // newNode = {2, null}
-  // list.tail = {2, null}
-
-  //[ {1, null}] [{1, {2, null}}] [{1, {2, {3,null}}}]
+  list.addToHead = function(value) {
+    var newNode = Node(value);
+    //if head is null, set to first node
+    if (list.head === null) {
+      list.head = newNode;
+      list.tail = newNode;
+    } else {
+    //any added new Node will be added into next null in head
+      list.head.previous = newNode;
+      newNode.next = list.head;
+      list.head = newNode;
+    // list.tail.previous = newNode;
+    //any new Node values added should equal current tail
+    }
+  };
 
   list.removeHead = function() {
+    if (!list.head) {
+      return null;
+    }
     //initiate result
     var result = list.head.value;
     //set head equal to next node
     list.head = list.head.next;
+    if (list.head) {
+      list.head.previous = null;
+    } else {
+      list.tail = null;
+    }
+    //return result
+    return result;
+  };
+
+  list.removeTail = function() {
+    if (!list.tail) {
+      return null;
+    }
+    //initiate result
+    var result = list.tail.value;
+    //set tail equal to previous node
+    list.tail = list.tail.previous;
+    if (list.tail) {
+      list.tail.next = null;
+    } else {
+      list.head = null;
+    }
     //return result
     return result;
   };
@@ -41,7 +75,7 @@ var LinkedList = function() {
     let currentObj = list.head;
     let isFound = false;
     //check if target is there
-    var containsHelper = function(target, currentObj) {
+    const containsHelper = function(target, currentObj) {
 
       if (currentObj.value === target) {
         return isFound = true;
@@ -52,7 +86,7 @@ var LinkedList = function() {
       }
 
       return isFound;
-    }
+    };
     //returns true if there
     return containsHelper(target, list.head);
     //returns false if null
@@ -66,6 +100,7 @@ var Node = function(value) {
 
   node.value = value;
   node.next = null;
+  node.previous = null;
 
   return node;
 };
@@ -76,8 +111,3 @@ var Node = function(value) {
   removeHead:  O(1)
   contains:    O(n)
  */
-
-
-
-   // { head : {1, 1}  {3: {2, 2} {tail: {3, null}}}
-  // { head : {1, 3}  {3, 2} {tail: {2, null}}}
