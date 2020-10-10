@@ -10,7 +10,7 @@ HashTable.prototype.insert = function(k, v) {
 
   let indexList = this._storage.get(index);
   // if something exists, check keys to see if already matching key
-  if (this._storage.get(index)) {
+  if (this.retrieve(k)) {
   // if matching key, replace
     for (let i = 0; i < indexList.length; i++) {
       if (indexList[i][0] === k) {
@@ -40,8 +40,14 @@ HashTable.prototype.retrieve = function(k) {
   }
 
   //check if something exists
+  if (indexList) {
   //if something exists, loop through the index to find the key
-
+    for (let i = 0; i < indexList.length; i++) {
+      if (indexList[i][0] === k) {
+        return indexList[i][1];
+      }
+    }
+  }
   //if index is empty, return undefined else return value
   return undefined; // Can we use braket notation to access the value?
 };
@@ -65,5 +71,3 @@ HashTable.prototype.remove = function(k) {
 * remove      best case O(1) worst case O(n)
 *
 */
-
-
